@@ -3,17 +3,11 @@ import os
 import requests
 
 
-def load_instances():
-    file_path = os.path.join(os.curdir, 'instances.json')
-    with open(file_path) as f:
-        return json.load(f)
-
-
 class ZendeskOAuth():
-    auth_url = None
-    token_request_url = None
-    revoke_access_url = None
-    logout_url = None
+    __auth_endpoint = "{}/oauth/authorizations/new"
+    __token_request_endpoint = "{}/oauth/tokens"
+    __revoke_access_endpoint = "{}/api/v2/oauth/tokens/current"
+    __logout_endpoint = "{}/access/logout"
 
     def __init__(self, name, url, client_id, secret_key, redirect_uri):
         self.name = name
@@ -21,13 +15,10 @@ class ZendeskOAuth():
         self.client_id = client_id
         self.secret_key = secret_key
         self.redirect_uri = redirect_uri
-        self.__build_urls()
-
-    def __build_urls(self):
-        self.auth_url = self.url + "/oauth/authorizations/new"
-        self.token_request_url = self.url + "/oauth/tokens"
-        self.revoke_access_url = self.url + "/api/v2/oauth/tokens/current"
-        self.logout_url = self.url + "/access/logout"
+        self.auth_url = self.__auth_endpoint.format(url)
+        self.token_request_url = self.__token_request_endpoint.format(url)
+        self.revoke_access_url = self.__revoke_access_endpoint.format(url)
+        self.logout_url = self.__logout_endpoint.format(url)
 
     def auth_request_url(self):
 
