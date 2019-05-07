@@ -8,8 +8,8 @@ def append_param_to_url(params, url):
     scheme, netloc, path, query_string, fragment = urlsplit(url)
     query_params = parse_qs(query_string)
     if params:
-        for param in params:
-            query_params.update(param)
+        for key, value in params.items():
+            query_params.update({key: value})
     query_params = urlencode(query_params, doseq=True)
 
     return urlunsplit((scheme, netloc, path,  query_params, fragment))
