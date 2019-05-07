@@ -1,4 +1,4 @@
-from request import ZendeskRequest
+from ..request import ZendeskRequest
 
 
 class ZendeskSupport():

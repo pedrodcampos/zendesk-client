@@ -3,7 +3,7 @@ import time
 from urllib.parse import (parse_qs, urlsplit,
                           urlunsplit, urlencode)
 
-from exceptions import ZendeskError, api_exception_handler
+from ..exceptions import ZendeskError, api_exception_handler
 from .helpers import reduce_dict, append_param_to_url
 
 
