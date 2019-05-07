@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(name='zendeskcli',
       version='0.1',
@@ -7,5 +7,5 @@ setup(name='zendeskcli',
       author='Pedro Campos',
       author_email='pedrocamp@gmail.com ',
       license='MIT',
-      packages=['zendeskcli'],
+      packages=find_packages(),
       zip_safe=False)
