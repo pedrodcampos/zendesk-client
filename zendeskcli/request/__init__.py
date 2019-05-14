@@ -53,8 +53,10 @@ class ZendeskRequest:
         response = self.__session.get(url)
         return response
 
-    def get(self, endpoint, keys=None, params=None):
+    def get(self, endpoint, keys=None, params=None, limit=None):
         data = {}
+        if limit:
+            params['per_page'] = limit
         while True:
             response = self.__get_page(endpoint, keys, params, len(data) == 0)
 
@@ -63,7 +65,8 @@ class ZendeskRequest:
                     data[key].extend(response.get(key, None))
                 else:
                     data[key] = response.get(key, None)
-
+            if limit:
+                break
             endpoint = response.get('next_page', None)
             if endpoint:
                 if params:
