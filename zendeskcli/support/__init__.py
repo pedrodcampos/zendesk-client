@@ -34,8 +34,8 @@ class ZendeskSupport():
     def ticket_fields(self):
         return self.__request.get(self.__ticket_fields_endpoint__, keys=[self.__ticket_fields_key__], params=None)
 
-    def search(self, query, limit=None):
+    def search(self, query, limit=None, progress_cb=None):
         params = {
             'query': query,
             'per_page': self.__per_page__}
-        return self.__request.get(self.__search_endpoint__, keys=[self.__search_key__], params=params, limit=limit)
+        return self.__request.get(self.__search_endpoint__, keys=[self.__search_key__], params=params, limit=limit, progress_cb=progress_cb)

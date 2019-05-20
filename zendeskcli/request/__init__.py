@@ -53,7 +53,7 @@ class ZendeskRequest:
         response = self.__session.get(url)
         return response
 
-    def get(self, endpoint, keys=None, params=None, limit=None):
+    def get(self, endpoint, keys=None, params=None, limit=None, progress_cb=None):
         data = {}
         if limit:
             params['per_page'] = limit
@@ -65,6 +65,15 @@ class ZendeskRequest:
                     data[key].extend(response.get(key, None))
                 else:
                     data[key] = response.get(key, None)
+
+                if progress_cb:
+                    progress_cb(status='working',
+                                key=key,
+                                progress=100*len(data[key])/response.get(
+                                    'count', None),
+                                total=response.get('count', None),
+                                current=len(data[key]))
+
             if limit:
                 break
             endpoint = response.get('next_page', None)
@@ -78,6 +87,10 @@ class ZendeskRequest:
             if key in data:
                 data[key] = reduce_dict(data[key])
 
+        if progress_cb:
+            progress_cb(status='done',
+                        total=response.get('count', None),
+                        current=len(data))
         return data
 
     def __get_enpoint_url(self, *args):
