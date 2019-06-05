@@ -58,7 +58,11 @@ class ZendeskRequest:
         if limit:
             params['per_page'] = limit
         while True:
-            response = self.__get_page(endpoint, keys, params, len(data) == 0)
+            try:
+                response = self.__get_page(
+                    endpoint, keys, params, len(data) == 0)
+            except Exception as e:
+                progress_cb(status='error', error=e)
 
             for key in keys:
                 if key in data:
