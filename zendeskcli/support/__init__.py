@@ -30,7 +30,7 @@ class ZendeskSupport():
         target_endpoint = self.__brands_endpoint__
         if id:
             target_endpoint += f'/{str(id)}'
-        return self.__request .get(target_endpoint, keys=self.__brand_keys__, params=None)
+        return self.__request .get(target_endpoint, keys=self.__brands_keys__, params=None)
 
     def ticket_fields(self):
         return self.__request.get(self.__ticket_fields_endpoint__, keys=self.__ticket_fields_keys__, params=None)
