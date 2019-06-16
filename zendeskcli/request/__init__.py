@@ -68,7 +68,8 @@ class ZendeskRequest:
                 if key in data:
                     data[key].extend(response.get(key, None))
                 else:
-                    data[key] = response.get(key, None)
+                    if key in response:
+                        data[key] = response.get(key, None)
 
                 if progress_cb:
                     progress_cb(status='working',

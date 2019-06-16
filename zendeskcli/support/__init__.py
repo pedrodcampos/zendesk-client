@@ -12,6 +12,8 @@ class ZendeskSupport():
     __search_keys__ = ['results']
     __ticket_fields_endpoint__ = 'ticket_fields'
     __ticket_fields_keys__ = ['ticket_fields']
+    __tickets_keys__ = ['tickets', 'ticket']
+    __tickets_endpoint__ = 'tickets'
     __per_page__ = 1000
 
     def __init__(self, url, auth, auth_method):
@@ -19,6 +21,14 @@ class ZendeskSupport():
 
     def permission_groups(self):
         return self.__request.get(self.__permission_groups_endpoint__, keys=self.__permission_groups_keys__, params=None)
+
+    def tickets(self, id=None, limit=None):
+        target_endpoint = self.__tickets_endpoint__
+        params = {
+            'per_page': self.__per_page__}
+        if id:
+            target_endpoint += f'/{str(id)}'
+        return self.__request.get(target_endpoint, keys=self.__tickets_keys__, params=params, limit=limit)
 
     def users(self, id=None):
         target_endpoint = self.__users_endpoint__
