@@ -79,7 +79,7 @@ class ZendeskRequest:
                                 total=response.get('count', None),
                                 current=len(data[key]))
 
-            if limit:
+            if len(data[keys[0]]) >= limit:
                 break
             endpoint = response.get('next_page', None)
             if endpoint:
