@@ -12,7 +12,7 @@ def append_param_to_url(params, url):
             value = quote(str(value))
             query_params.update({key: value})
     query_params = "&".join(
-        [key+'='+value for key, value in query_params.items()])
+        [key+'='+"".join(value) for key, value in query_params.items()])
 
     return urlunsplit((scheme, netloc, path,  query_params, fragment))
 
