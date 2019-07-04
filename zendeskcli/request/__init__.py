@@ -72,10 +72,11 @@ class ZendeskRequest:
                         data[key] = response.get(key, None)
 
                 if progress_cb:
+                    count = response.get('count', 1)
                     progress_cb(status='working',
                                 key=key,
-                                progress=100*len(data[key])/response.get(
-                                    'count', None),
+                                progress=100 *
+                                len(data[key])/(1 if count == 0 else count),
                                 total=response.get('count', None),
                                 current=len(data[key]))
             if limit:

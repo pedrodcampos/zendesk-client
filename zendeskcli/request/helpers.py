@@ -1,6 +1,6 @@
 
 from urllib.parse import (parse_qs, urlsplit,
-                          urlunsplit, urlencode)
+                          urlunsplit, urlencode, quote)
 
 
 def append_param_to_url(params, url):
@@ -9,8 +9,10 @@ def append_param_to_url(params, url):
     query_params = parse_qs(query_string)
     if params:
         for key, value in params.items():
+            value = quote(str(value))
             query_params.update({key: value})
-    query_params = urlencode(query_params, doseq=True)
+    query_params = "&".join(
+        [key+'='+value for key, value in query_params.items()])
 
     return urlunsplit((scheme, netloc, path,  query_params, fragment))
 
