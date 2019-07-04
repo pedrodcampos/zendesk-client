@@ -17,7 +17,7 @@ class ZendeskRequest:
         if auth_method.lower() == 'token':
             self.__session.headers['Authorization'] = f"Bearer {auth}"
         elif auth_method.lower() == 'password':
-            self.__session.auth = auth
+            self.__session.auth = tuple(auth)
         else:
             raise ZendeskError('Invalid Authentication method.')
 
